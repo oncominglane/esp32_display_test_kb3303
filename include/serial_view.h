@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AppState.h"
+#include "app_state.h"
 
 class SerialView {
  public:

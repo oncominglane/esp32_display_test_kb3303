@@ -1,6 +1,6 @@
-#include "InputButtons.h"
+#include "input_buttons.h"
 
-#include "Config.h"
+#include "config.h"
 
 #if defined(ENV_ESP32)
 #include <Arduino.h>

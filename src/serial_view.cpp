@@ -1,6 +1,6 @@
-#include "SerialView.h"
+#include "serial_view.h"
 
-#include "Config.h"
+#include "config.h"
 
 #if defined(ENV_ESP32)
 #include <Arduino.h>
