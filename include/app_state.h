@@ -23,20 +23,21 @@ struct AppState {
 };
 
 inline AppState createDefaultAppState() {
-  return {{
-              {"Parameter 1", ParameterColor::Green},
-              {"Parameter 2", ParameterColor::Green},
-              {"Parameter 3", ParameterColor::Green},
-              {"Parameter 4", ParameterColor::Green},
-              {"Parameter 5", ParameterColor::Green},
-              {"Parameter 6", ParameterColor::Green},
-              {"Parameter 7", ParameterColor::Green},
-              {"Parameter 8", ParameterColor::Green},
-              {"Parameter 9", ParameterColor::Green},
-              {"Parameter 10", ParameterColor::Green},
-          },
-          0,
-          0};
+  return AppState{
+      std::array<ParameterItem, PARAMETER_COUNT>{{
+          {"Parameter 1", ParameterColor::Green},
+          {"Parameter 2", ParameterColor::Green},
+          {"Parameter 3", ParameterColor::Green},
+          {"Parameter 4", ParameterColor::Green},
+          {"Parameter 5", ParameterColor::Green},
+          {"Parameter 6", ParameterColor::Green},
+          {"Parameter 7", ParameterColor::Green},
+          {"Parameter 8", ParameterColor::Green},
+          {"Parameter 9", ParameterColor::Green},
+          {"Parameter 10", ParameterColor::Green},
+      }},
+      0,
+      0};
 }
 
 inline std::uint8_t maxScrollOffset() {
