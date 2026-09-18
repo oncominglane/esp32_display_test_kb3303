@@ -1,205 +1,101 @@
-# Test Task Summary
+# Тестовое Задание
 
-## Target Environment
+## Среда Разработки
 
-The project shall be created using the following development environment:
-
-- **IDE:** Visual Studio Code
+- **IDE:** VS Code
 - **Build system:** PlatformIO
 - **Framework:** Arduino
-- **Target board:** ESP32-S3-ETH
+- **Целевая плата:** ESP32-S3-ETH
 
----
+## Задание
 
-## Hardware
+Создать проект в указанной среде и на указанном framework.
 
-### Display
+## Требования К Коду
 
-Target display module: **1.5-inch RGB OLED module**.
+### 1. Инициализация И Заставка
 
-![Display module](images/display_module.png)
+При старте программы необходимо:
 
-### ESP32 Board
+1. Инициализировать дисплей.
+2. Показать заставку из файла в течение **10 секунд**.
+3. Целевое хранение файла заставки должно быть в файловой системе ESP32.
 
-Target controller board: **ESP32-S3-ETH**.
+### 2. Основной Экран
 
-![ESP32-S3-ETH pinout](images/esp32_s3_eth_pinout.png)
+После показа заставки необходимо отобразить основной экран со списком из
+**10 параметров**:
 
-### External Buttons
+- `Parameter 1`
+- `Parameter 2`
+- `Parameter 3`
+- `Parameter 4`
+- `Parameter 5`
+- `Parameter 6`
+- `Parameter 7`
+- `Parameter 8`
+- `Parameter 9`
+- `Parameter 10`
 
-Four external buttons are used for user input:
+Начальный цвет параметров: **зеленый**.
 
-- Up
-- Down
-- Left
-- Right
+### 3. Прокрутка Списка
 
-![Buttons layout](images/buttons_layout.png)
+На основном экране должна быть реализована прокрутка списка параметров.
 
----
+Требования:
 
-## Functional Requirements
+- внешняя кнопка **Up** прокручивает список вверх;
+- внешняя кнопка **Down** прокручивает список вниз;
+- на экране одновременно видно только **4 параметра** из 10;
+- шрифт и разделение знакомест должны быть подобраны так, чтобы 4 видимых
+  параметра равномерно располагались по высоте экрана;
+- границы списка должны отрабатываться корректно;
+- прокрутка списка должна отрабатываться корректно;
+- текущий выбранный параметр должен отрабатываться корректно.
 
-### 1. Project Setup
+### 4. Выделение Текущего Параметра
 
-Create a PlatformIO project using:
+Текущий выбранный параметр должен выделяться **желтым прямоугольником**.
 
-- ESP32-S3-ETH
-- Arduino framework
+### 5. Изменение Цвета Параметра
 
----
+При нажатии горизонтальных кнопок должен изменяться цвет текущего выбранного
+параметра:
 
-### 2. Splash Screen
+- кнопка **Right** меняет цвет текущего параметра на **красный**;
+- кнопка **Left** меняет цвет текущего параметра на **зеленый**.
 
-At startup, the firmware shall:
+После перезагрузки цвета параметров должны сохраняться.
 
-1. Initialize the display.
-2. Load a splash image from a file.
-3. Store the splash image in the ESP32 file system in the target implementation.
-4. Display the splash screen for **10 seconds**.
-5. Switch to the main parameter screen after the splash screen timeout.
+### 6. USB Log
 
-![Splash reference](images/splash_reference.png)
+В порт лога через USB необходимо выводить аналогично то, что видно на экране.
 
----
+Желательно:
 
-### 3. Main Parameter List
+- выполнять вывод с перезатиркой строк;
+- сделать так, чтобы в логе была копия экрана;
+- не добавлять в лог ничего лишнего.
 
-After the splash screen, the application shall display a scrollable list of **10 parameters**:
+Нужно предложить решение для:
 
-- Parameter 1
-- Parameter 2
-- Parameter 3
-- Parameter 4
-- Parameter 5
-- Parameter 6
-- Parameter 7
-- Parameter 8
-- Parameter 9
-- Parameter 10
+- отображения выделения параметра в логе;
+- отображения цвета значения параметра в логе.
 
-Initial parameter text color: **green**.
+### 7. Использование ИИ
 
-The following behavior is required:
+ИИ пользоваться можно и нужно.
 
-- Only **4 parameters** shall be visible on the display at the same time.
-- Font size and row spacing shall be selected so that the four visible items are distributed evenly over the display height.
-- The **Up** and **Down** buttons shall move the current selection through the parameter list.
-- The list shall scroll when the selection moves outside the currently visible four-item window.
-- The upper and lower list boundaries shall be handled correctly.
-- The currently selected parameter shall be tracked explicitly.
-- The currently selected parameter shall be highlighted with a **yellow rectangle**.
+Промты необходимо предоставить.
 
----
+### 8. Порядок Выполнения
 
-### 4. Parameter Color Control
+Пункт 2 можно выполнять в любом порядке.
 
-The text color of the currently selected parameter shall be changed using the horizontal buttons:
+## Результат
 
-- **Right** button -> set the current parameter color to **red**
-- **Left** button -> set the current parameter color to **green**
+Результат необходимо оформить как:
 
-The selected colors of all parameters shall be preserved after device reboot.
-
----
-
-### 5. USB Log Output
-
-The USB log output shall mirror the display state as closely as possible.
-
-The log shall:
-
-- show the same four currently visible parameters;
-- show which parameter is currently selected;
-- indicate the color assigned to every visible parameter;
-- preferably redraw or overwrite existing terminal lines instead of continuously appending duplicate output.
-
-A possible terminal representation is:
-
-```text
-> Parameter 1 [GREEN]
-  Parameter 2 [RED]
-  Parameter 3 [GREEN]
-  Parameter 4 [GREEN]
-```
-
-Where:
-
-- `>` marks the currently selected parameter;
-- `[GREEN]` and `[RED]` represent the parameter text color on the display.
-
-The exact text representation of selection and color may be chosen as part of the implementation.
-
----
-
-## AI Usage
-
-AI tools may and should be used during implementation.
-
-All relevant prompts used during development shall be provided with the final submission.
-
-Recommended project documentation file:
-
-```text
-docs/AI_PROMPTS.md
-```
-
----
-
-## Deliverables
-
-The final result shall include:
-
-- PlatformIO project folder;
-- source code;
-- project configuration;
-- splash image file;
-- AI prompts used during development;
-- supporting documentation.
-
----
-
-## Suggested Repository Structure
-
-```text
-esp32_display_test/
-|
-|-- data/
-|   `-- splash.bmp
-|
-|-- docs/
-|   |-- task_summary.md
-|   |-- AI_PROMPTS.md
-|   `-- images/
-|       |-- display_module.png
-|       |-- esp32_s3_eth_pinout.png
-|       |-- buttons_layout.png
-|       `-- splash_reference.png
-|
-|-- include/
-|   |-- app_state.h
-|   |-- config.h
-|   |-- display_view.h
-|   |-- input_buttons.h
-|   |-- serial_view.h
-|   `-- storage.h
-|
-|-- src/
-|   |-- display_view.cpp
-|   |-- input_buttons.cpp
-|   |-- main.cpp
-|   |-- serial_view.cpp
-|   `-- storage.cpp
-|
-|-- .gitignore
-|-- platformio.ini
-`-- README.md
-```
-
----
-
-## Notes
-
-- Hardware-specific behavior shall be verified on the actual ESP32-S3-ETH board when the hardware becomes available.
-- Display initialization and rendering depend on the exact display controller and interface used by the provided OLED module.
-- The application logic should remain separated from hardware-specific code where practical, so that menu behavior can be tested independently from the physical display and buttons.
+- промты;
+- папка с проектом.
