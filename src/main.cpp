@@ -7,7 +7,11 @@
 #if defined(ENV_ESP32)
 #include <Arduino.h>
 #else
+#include <cctype>
 #include <iostream>
+#if defined(_WIN32)
+#include <conio.h>
+#endif
 #endif
 
 namespace {
@@ -86,23 +90,63 @@ void loop() {
 
 #else
 
+namespace {
+
+void printNativeControls() {
+  std::cout << "\nW: Up  S: Down  A: Green  D: Red  Q: Quit\n";
+}
+
+char readNativeKey() {
+#if defined(_WIN32)
+  return static_cast<char>(_getch());
+#else
+  char key = '\0';
+  std::cin >> key;
+  return key;
+#endif
+}
+
+ButtonEvent buttonEventFromKey(char key) {
+  switch (static_cast<char>(std::tolower(static_cast<unsigned char>(key)))) {
+    case 'w':
+      return ButtonEvent::Up;
+    case 's':
+      return ButtonEvent::Down;
+    case 'a':
+      return ButtonEvent::Left;
+    case 'd':
+      return ButtonEvent::Right;
+    default:
+      return ButtonEvent::None;
+  }
+}
+
+bool isQuitKey(char key) {
+  return std::tolower(static_cast<unsigned char>(key)) == 'q';
+}
+
+}  // namespace
+
 int main() {
   initializeApplication();
+  printNativeControls();
 
-  const ButtonEvent demoEvents[] = {
-      ButtonEvent::Down,  ButtonEvent::Down, ButtonEvent::Right,
-      ButtonEvent::Down,  ButtonEvent::Down, ButtonEvent::Down,
-      ButtonEvent::Left,  ButtonEvent::Up,
-  };
+  while (true) {
+    const char key = readNativeKey();
 
-  for (const ButtonEvent event : demoEvents) {
+    if (isQuitKey(key)) {
+      break;
+    }
+
+    const ButtonEvent event = buttonEventFromKey(key);
     if (handleButtonEvent(event)) {
       renderAll();
+      printNativeControls();
     }
   }
 
   storage.end();
-  std::cout << "\nNative logic demo finished.\n";
+  std::cout << "\nNative interactive demo finished.\n";
   return 0;
 }
 

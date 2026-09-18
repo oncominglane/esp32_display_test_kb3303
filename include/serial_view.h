@@ -9,5 +9,6 @@ class SerialView {
 
  private:
   static const char* colorName(ParameterColor color);
+  static const char* ansiColor(ParameterColor color);
   static char selectionMarker(bool selected);
 };
